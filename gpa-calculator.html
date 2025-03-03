@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input, select { margin: 5px; padding: 5px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid black; padding: 8px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <h2>GPA Calculator</h2>
+    <table id="subjects">
+        <tr>
+            <th>Subject</th>
+            <th>Credit Hours</th>
+            <th>Grade</th>
+        </tr>
+        <tr>
+            <td><input type="text" placeholder="Subject Name"></td>
+            <td><input type="number" class="credit" min="1" value="3"></td>
+            <td>
+                <select class="grade">
+                    <option value="4.0">A</option>
+                    <option value="3.7">A-</option>
+                    <option value="3.3">B+</option>
+                    <option value="3.0">B</option>
+                    <option value="2.7">B-</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+
+    <button onclick="addRow()">Add Subject</button>
+    <button onclick="calculateGPA()">Calculate GPA</button>
+    <h3 id="result"></h3>
+
+    <script>
+        function addRow() {
+            let table = document.getElementById("subjects");
+            let row = table.insertRow(-1);
+            row.innerHTML = '<td><input type="text" placeholder="Subject Name"></td>' +
+                            '<td><input type="number" class="credit" min="1" value="3"></td>' +
+                            '<td><select class="grade">' +
+                            '<option value="4.0">A</option>' +
+                            '<option value="3.7">A-</option>' +
+                            '<option value="3.3">B+</option>' +
+                            '<option value="3.0">B</option>' +
+                            '<option value="2.7">B-</option>' +
+                            '</select></td>';
+        }
+
+        function calculateGPA() {
+            let credits = document.querySelectorAll(".credit");
+            let grades = document.querySelectorAll(".grade");
+            let totalPoints = 0, totalCredits = 0;
+
+            for (let i = 0; i < credits.length; i++) {
+                let credit = parseFloat(credits[i].value);
+                let grade = parseFloat(grades[i].value);
+                totalPoints += credit * grade;
+                totalCredits += credit;
+            }
+
+            let gpa = totalPoints / totalCredits;
+            document.getElementById("result").innerText = "Your GPA: " + gpa.toFixed(2);
+        }
+    </script>
+
+</body>
+</html>
